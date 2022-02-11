@@ -9,22 +9,22 @@
 void insertion_sort_list(listint_t **list)
 {
 	listint_t *nxtNptr, *prevNptr, *traverse;
-	/* nxtNptr is a temporary pointer to what list is pointing to*/
+	/* ^ nxtNptr is a temporary pointer to what list is pointing to*/
 
 
 	if ((*list)->next == NULL)/*if the list is empty, it will stop*/
 		return;
 
 	for (nxtNptr = (*list); nxtNptr != NULL; nxtNptr = traverse)
-		/*nxtNptr is the next node pointer to be checked*/
+		/* ^ nxtNptr is the next node pointer to be checked*/
 	{
 		traverse = nxtNptr->next;
-		/*points to the next node in order to move through the list*/
+		/* ^ points to the next node in order to move through the list*/
 		prevNptr = nxtNptr->prev;
-	/*previous node pointer to be checked*/
+	/* ^ previous node pointer to be checked*/
 		while (prevNptr != NULL && nxtNptr->n < prevNptr->n)
 		/**
-		 * checks if there's a node &&
+		 * ^ checks if there's a node &&
 		 * checks wether the nxt ptr node (ex: 48),
 		 * is less than the prev ptr node(ex: 19)
 		 */
@@ -43,23 +43,36 @@ void insertion_sort_list(listint_t **list)
  */
 void swap_nodes(listint_t **head, listint_t **left, listint_t *right)
 {
-	(*left)->next = right->next;/*prev node ptr is assigned the next pointer*/
-	if (right->next != NULL)/*checkes wether the next pointer has data (node)*/
-		right->next->prev = *left; 
-	/*the next pointer (ex: 71) takes to the nxt pointer(ex: 13)
-	 *and the previous node (ex: 13) and assigns it to the previous pointer(ex: 99)*/
-	right->prev = (*left)->prev; 
-	/*assigns the previous node of the right variable (1st entrance: 71)
-	 * the previous node of the left variable (1st entrance: 99) to the sorted node*/
-	right->next = *left;/*the right node pointers are assigned to the entirety of left*/
+	(*left)->next = right->next;/*assigns the prev node ptr to the nxt node ptr*/
+	if (right->next != NULL)/*checks whether the next pointer is a node*/
+		right->next->prev = *left;
+	/**
+	 * ^ The next pointer (ex: 71) takes to the nxt pointer(ex: 13)
+	 * and the previous node (x: 13) and
+	 * swaps it with the previous pointer(ex: 99)
+	 */
+	right->prev = (*left)->prev;
+	/**
+	 * ^ swaps the previous node of the nxt node ptr (ex: 71) and
+	 * the prev node of the nxt node ptr (ex: 99) to the sorted node
+	 */
+	right->next = *left;
+	/* ^ swaps the ptrs of the nxt node to the pointers of the prev node*/
 	if ((*left)->prev != NULL)
-	/*checkes wether the previous pointer has data(node) when its finishing 13 will head to the else*/
+	/* ^ checks whether the prev ptr has a node*/
 	{
-		(*left)->prev->next = right; 
-		/*assigns the 71 to the 99; the previus pointer takes the previous pointer and assigns it to the next pointer*/
+		(*left)->prev->next = right;
+		/**
+		 * ^ swaps the nxt ptr to the prev node ptr
+		 * of the prev node ptr (ex: swaps 71 to 99)
+		 */
 	}
 	else
-		*head = right; /*assigns the head 7*/
-	(*left)->prev = right;/*assigns the previous node of 7 to 13 */
-	*left = right->prev;/*assigns the previous node of 7 to its next ndoe 13 */
+	/* ^ used when the program is finishing checking the list*/
+		*head = right;
+		/* ^ swaps the head to the nxt node ptr (ex: 7)*/
+	(*left)->prev = right;
+	/* ^ swaps the prev node ptr of 7 to 13 */
+	*left = right->prev;
+	/*swaps the prev node ptr of 7 to 13 */
 }

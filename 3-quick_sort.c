@@ -43,12 +43,13 @@ void quicksort_recursion(int *array, int low, int high, size_t size)
 }
 
 /**
- * partition- artitions the array between low - high indexes by a pivot value and returns
- * the index of the pivot
+ * partition- artitions the array between low - high indexes by a
+ * pivot value and returns the index of the pivot
  * @array: array to quicksort
  * @low: lowest elements of array
  * @high: second index of our partition.
  * @size: size of the array
+ * Return: index
  */
 
 int partition(int *array, int low, int high, size_t size)
@@ -76,12 +77,14 @@ int partition(int *array, int low, int high, size_t size)
 		quick_swap(&array[i], &array[high]);
 		print_array(array, size);
 	}
-	return i;
+	return (i);
 }
+
 /**
- * quick_swap - swaps the value of what i is pointing to with the value of what y is.
- *@i: element
- *@j: element
+ * quick_swap - swaps the value of what x is pointing to
+ *with the value of what y is
+ *@x: element
+ *@y: element
  */
 
 void quick_swap(int *x, int *y)

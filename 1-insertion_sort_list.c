@@ -12,7 +12,7 @@ void insertion_sort_list(listint_t **list)
 	/* ^ nxtNptr is a temporary pointer to what list is pointing to*/
 
 
-	if ((*list)->next == NULL)/*if the list is empty, it will stop*/
+	if (list == NULL || (*list)->next == NULL)/*if the list is empty, it will stop*/
 		return;
 
 	for (nxtNptr = (*list); nxtNptr != NULL; nxtNptr = traverse)

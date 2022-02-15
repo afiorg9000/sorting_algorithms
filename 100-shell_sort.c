@@ -8,29 +8,32 @@
  */
 void shell_sort(int *array, size_t size)
 {
-	size_t n = 1, idx, j;
+	size_t n = 1, idx, i;
 	int tmp;
 
 	if (size < 2 || array == NULL)
 	{
 		return;
 	}
+
 	while (n < size)
 	{
+	/* finds the max gap*/
 		n = n * 3 + 1;
 	}
+
 	n /= 3;
+	/*decreases gap sequence*/
+
 	while (n > 0)
 	{
-		/* finds the max gap*/
-		/*decreases gap sequence*/
+		for (idx = n; idx < size; idx++)
 		/*compares values from begining and from gap*/
-		for (idx = n; idx < size; idx ++)
 		{
 			tmp = array[idx];
-			for (j = idx; j >= n && array[j - n] > tmp; j -= n)
-				array[j] = array[j - n];
-			array[j] = tmp;
+			for (i = idx; i >= n && array[i - n] > tmp; i -= n)
+				array[i] = array[i - n];
+			array[i] = tmp;
 		}
 		n /= 3;
 		print_array(array, size);

@@ -1,15 +1,7 @@
-0x1B. C - Sorting algorithms & Big O
-====================================
+# C - Sorting algorithms & Big O
 
--  By Alexandre Gautier
+Sorting algorithms arrange items in a sequence (like numbers) into a specified order, improving data organization for efficient searching and retrieval. Examples include Bubble Sort, Quick Sort, and Merge Sort, each differing in implementation and efficiency. Their performance is evaluated using Big O notation, which measures time complexity and describes how completion time scales with input size. Quick Sort, for instance, is efficient at O(nlogn), while Bubble Sort is slower with O(n2). This notation aids in assessing algorithm scalability and practicality for various data sizes.
 
-Background Context
-------------------
-
-This project is meant to be done by groups of two students. Each group of two should pair program for at least the mandatory part.
-
-Resources
----------
 
 **Read or watch**:
 
@@ -18,437 +10,74 @@ Resources
 -	[Sorting algorithms animations](https://intranet.hbtn.io/rltoken/kJ7rgWoqdLnxSnSEoAiFCQ "Sorting algorithms animations")
 -	[15 sorting algorithms in 6 minutes](https://intranet.hbtn.io/rltoken/RdvoGNMTJ6Hq34aJ_HmCqA "15 sorting algorithms in 6 minutes") (**WARNING**: The following video can trigger seizure/epilepsy. It is not required for the project, as it is only a funny visualization of different sorting algorithms)
 
-Learning Objectives
--------------------
 
-At the end of this project, you are expected to be able to [explain to anyone](https://alx-intranet.hbtn.io/rltoken/SBdRhGGBuqzWcwcuKyapSQ "explain to anyone"), **without the help of Google**:
-
-### General
-
--	At least four different sorting algorithms
--	What is the Big O notation, and how to evaluate the time complexity of an algorithm
--	How to select the best sorting algorithm for a given input
--	What is a stable sorting algorithm
-
-Requirements
-------------
-
-### General
-
--   Allowed editors: `vi`, `vim`, `emacs`
--	All your files will be compiled on Ubuntu 20.04 LTS using gcc, using the options -Wall -Werror -Wextra -pedantic -std=gnu89
--	All your files should end with a new line
--	A `README.md` file, at the root of the folder of the project, is mandatory
--	Your code should use the `Betty` style. It will be checked using [betty-style.pl](https://github.com/holbertonschool/Betty/blob/master/betty-style.pl " betty-style.pl") and [betty-doc.pl](https://github.com/holbertonschool/Betty/blob/master/betty-doc.pl "betty-style.pl")
--	You are not allowed to use global variables
--	No more than 5 functions per file
--	Unless specified otherwise, you are not allowed to use the standard library. Any use of functions like printf, puts, … is totally forbidden.
--	In the following examples, the `main.c` files are shown as examples. You can use them to test your functions, but you don’t have to push them to your repo (if you do we won’t take them into account). We will use our own main.c files at compilation. Our main.c files might be different from the one shown in the examples
--	The prototypes of all your functions should be included in your header file called `sort.h`
--	Don’t forget to push your header file
--	All your header files should be include guarded
--	A list/array does not need to be sorted if its size is less than 2.
-
-### GitHub
-**There should be one project repository per group. If you clone/fork/whatever a project repository with the same name before the second deadline, you risk a 0% score.**
-
-More Info
-----------
-
-### Data Structure and Functions
-
--	For this project you are given the following `print_array`, and `print_list` functions:
-
-```
-#include <stdlib.h>
-#include <stdio.h>
-
-/**
- * print_array - Prints an array of integers
- *
- * @array: The array to be printed
- * @size: Number of elements in @array
- */
-void print_array(const int *array, size_t size)
-{
-    size_t i;
-
-    i = 0;
-    while (array && i < size)
-    {
-        if (i > 0)
-            printf(", ");
-        printf("%d", array[i]);
-        ++i;
-    }
-    printf("\n");
-}
-```
-
-```
-#include <stdio.h>
-#include "sort.h"
-
-/**
- * print_list - Prints a list of integers
- *
- * @list: The list to be printed
- */
-void print_list(const listint_t *list)
-{
-    int i;
-
-    i = 0;
-    while (list)
-    {
-        if (i > 0)
-            printf(", ");
-        printf("%d", list->n);
-        ++i;
-        list = list->next;
-    }
-    printf("\n");
-}
-```
-
--	Our files `print_array.c` and `print_list.c` (containing the `print_array` and `print_list` functions) will be compiled with your functions during the correction.
--	Please declare the prototype of the functions `print_array` and `print_list` in your `sort.h` header file
--	Please use the following data structure for doubly linked list:
-
-```
-/**
- * struct listint_s - Doubly linked list node
- *
- * @n: Integer stored in the node
- * @prev: Pointer to the previous element of the list
- * @next: Pointer to the next element of the list
- */
-typedef struct listint_s
-{
-    const int n;
-    struct listint_s *prev;
-    struct listint_s *next;
-} listint_t;
-```
-
-Please, note this format is used for Quiz and Task questions.
-
--	`O(1)`
--	`O(n)`
--	`O(n!)`
--	n square -> `O(n^2)`
--	log(n) -> `O(log(n))`
--	n * log(n) -> `O(nlog(n))`
--	n + k -> `O(n+k)`
--	…
-Please use the “short” notation (don’t use constants). Example: `O(nk)` or `O(wn)` should be written `O(n)`. If an answer is required within a file, all your answers files must have a newline at the end.
-
-
-### Tests
-
-Here is a quick tip to help you test your sorting algorithms with big sets of random integers: [Random.org](https://intranet.hbtn.io/rltoken/KkFXByKWf55lTK32JnY62w "Random.org")
-
-
-Tasks
------
-
-### 0\. Bubble sort
-
-mandatory
-
-Write a function that sorts an array of integers in ascending order using the [Bubble sort](https://intranet.hbtn.io/rltoken/fCItpIfgmE07fFbHBUToeg "Bubble sort") algorithm
-
--	Prototype: `void bubble_sort(int *array, size_t size);`
--	You’re expected to print the `array` after each time you swap two elements (See example below)
-Write in the file `0-O`, the big O notations of the time complexity of the Bubble sort algorithm, with 1 notation per line:
-
--	in the best case
--	in the average case
--	in the worst case
-
-```
-alex@/tmp/sort$ cat 0-main.c
-#include <stdio.h>
-#include <stdlib.h>
-#include "sort.h"
-
-/**
- * main - Entry point
- *
- * Return: Always 0
- */
-int main(void)
-{
-    int array[] = {19, 48, 99, 71, 13, 52, 96, 73, 86, 7};
-    size_t n = sizeof(array) / sizeof(array[0]);
-
-    print_array(array, n);
-    printf("\n");
-    bubble_sort(array, n);
-    printf("\n");
-    print_array(array, n);
-    return (0);
-}
-alex@/tmp/sort$ gcc -Wall -Wextra -Werror -pedantic  -std=gnu89 0-bubble_sort.c 0-main.c print_array.c -o bubble
-alex@/tmp/sort$ ./bubble
-19, 48, 99, 71, 13, 52, 96, 73, 86, 7
-
-19, 48, 71, 99, 13, 52, 96, 73, 86, 7
-19, 48, 71, 13, 99, 52, 96, 73, 86, 7
-19, 48, 71, 13, 52, 99, 96, 73, 86, 7
-19, 48, 71, 13, 52, 96, 99, 73, 86, 7
-19, 48, 71, 13, 52, 96, 73, 99, 86, 7
-19, 48, 71, 13, 52, 96, 73, 86, 99, 7
-19, 48, 71, 13, 52, 96, 73, 86, 7, 99
-19, 48, 13, 71, 52, 96, 73, 86, 7, 99
-19, 48, 13, 52, 71, 96, 73, 86, 7, 99
-19, 48, 13, 52, 71, 73, 96, 86, 7, 99
-19, 48, 13, 52, 71, 73, 86, 96, 7, 99
-19, 48, 13, 52, 71, 73, 86, 7, 96, 99
-19, 13, 48, 52, 71, 73, 86, 7, 96, 99
-19, 13, 48, 52, 71, 73, 7, 86, 96, 99
-13, 19, 48, 52, 71, 73, 7, 86, 96, 99
-13, 19, 48, 52, 71, 7, 73, 86, 96, 99
-13, 19, 48, 52, 7, 71, 73, 86, 96, 99
-13, 19, 48, 7, 52, 71, 73, 86, 96, 99
-13, 19, 7, 48, 52, 71, 73, 86, 96, 99
-13, 7, 19, 48, 52, 71, 73, 86, 96, 99
-7, 13, 19, 48, 52, 71, 73, 86, 96, 99
-
-7, 13, 19, 48, 52, 71, 73, 86, 96, 99
-alex@/tmp/sort$
-```
-
-**Repo:**
--   GitHub repository: ` sorting_algorithms`
--   File: `0-bubble_sort.c, 0-O`
-
-### 1\. Insertion sort
-
-mandatory
-
-Write a function that sorts a doubly linked list of integers in ascending order using the [Insertion sort](https://intranet.hbtn.io/rltoken/4ueB1I1MkNypoTBXR0YX3g "Insertion sort") algorithm
-
--	Prototype: `void insertion_sort_list(listint_t **list);`
--	You are not allowed to modify the integer `n` of a node. You have to swap the nodes themselves.
--	You’re expected to print the `list` after each time you swap two elements (See example below)
-
-Write in the file `1-O`, the big O notations of the time complexity of the Insertion sort algorithm, with 1 notation per line:
-
--	in the best case
--	in the average case
--	in the worst case
-
-```
-alex@/tmp/sort$ cat 1-main.c
-#include <stdio.h>
-#include <stdlib.h>
-#include "sort.h"
-
-/**
- * create_listint - Creates a doubly linked list from an array of integers
- *
- * @array: Array to convert to a doubly linked list
- * @size: Size of the array
- *
- * Return: Pointer to the first element of the created list. NULL on failure
- */
-listint_t *create_listint(const int *array, size_t size)
-{
-    listint_t *list;
-    listint_t *node;
-    int *tmp;
-
-    list = NULL;
-    while (size--)
-    {
-        node = malloc(sizeof(*node));
-        if (!node)
-            return (NULL);
-        tmp = (int *)&node->n;
-        *tmp = array[size];
-        node->next = list;
-        node->prev = NULL;
-        list = node;
-        if (list->next)
-            list->next->prev = list;
-    }
-    return (list);
-}
-
-/**
- * main - Entry point
- *
- * Return: Always 0
- */
-int main(void)
-{
-    listint_t *list;
-    int array[] = {19, 48, 99, 71, 13, 52, 96, 73, 86, 7};
-    size_t n = sizeof(array) / sizeof(array[0]);
-
-    list = create_listint(array, n);
-    if (!list)
-        return (1);
-    print_list(list);
-    printf("\n");
-    insertion_sort_list(&list);
-    printf("\n");
-    print_list(list);
-    return (0);
-}
-alex@/tmp/sort$ gcc -Wall -Wextra -Werror -pedantic  -std=gnu89 1-main.c 1-insertion_sort_list.c print_list.c -o insertion
-alex@/tmp/sort$ ./insertion
-19, 48, 99, 71, 13, 52, 96, 73, 86, 7
-
-19, 48, 71, 99, 13, 52, 96, 73, 86, 7
-19, 48, 71, 13, 99, 52, 96, 73, 86, 7
-19, 48, 13, 71, 99, 52, 96, 73, 86, 7
-19, 13, 48, 71, 99, 52, 96, 73, 86, 7
-13, 19, 48, 71, 99, 52, 96, 73, 86, 7
-13, 19, 48, 71, 52, 99, 96, 73, 86, 7
-13, 19, 48, 52, 71, 99, 96, 73, 86, 7
-13, 19, 48, 52, 71, 96, 99, 73, 86, 7
-13, 19, 48, 52, 71, 96, 73, 99, 86, 7
-13, 19, 48, 52, 71, 73, 96, 99, 86, 7
-13, 19, 48, 52, 71, 73, 96, 86, 99, 7
-13, 19, 48, 52, 71, 73, 86, 96, 99, 7
-13, 19, 48, 52, 71, 73, 86, 96, 7, 99
-13, 19, 48, 52, 71, 73, 86, 7, 96, 99
-13, 19, 48, 52, 71, 73, 7, 86, 96, 99
-13, 19, 48, 52, 71, 7, 73, 86, 96, 99
-13, 19, 48, 52, 7, 71, 73, 86, 96, 99
-13, 19, 48, 7, 52, 71, 73, 86, 96, 99
-13, 19, 7, 48, 52, 71, 73, 86, 96, 99
-13, 7, 19, 48, 52, 71, 73, 86, 96, 99
-7, 13, 19, 48, 52, 71, 73, 86, 96, 99
-
-7, 13, 19, 48, 52, 71, 73, 86, 96, 99
-alex@/tmp/sort$
-```
-
-**Repo:**
-
--   GitHub repository: `sorting_algorithms`
--   File: `1-insertion_sort_list.c, 1-O`
-
-
-### 2\. Selection sort
-
-mandatory
-
-Write a function that sorts an array of integers in ascending order using the [Selection sort](https://intranet.hbtn.io/rltoken/_DodgdySm5bPerpQm1LhwQ "Selection sort") algorithm
-
--	Prototype: `void selection_sort(int *array, size_t size);`
--	You’re expected to print the `array` after each time you swap two elements (See example below)
-
-Write in the file `2-O, the big O notations of the time complexity of the Selection sort algorithm, with 1 notation per line:
-
--	in the best case
--	in the average case
--	in the worst case
-
-```
-alex@/tmp/sort$ cat 2-main.c
-#include <stdio.h>
-#include <stdlib.h>
-#include "sort.h"
-
-/**
- * main - Entry point
- *
- * Return: Always 0
- */
-int main(void)
-{
-    int array[] = {19, 48, 99, 71, 13, 52, 96, 73, 86, 7};
-    size_t n = sizeof(array) / sizeof(array[0]);
-
-    print_array(array, n);
-    printf("\n");
-    selection_sort(array, n);
-    printf("\n");
-    print_array(array, n);
-    return (0);
-}
-alex@/tmp/sort$ gcc -Wall -Wextra -Werror -pedantic  -std=gnu89
-2-main.c 2-selection_sort.c print_array.c -o select
-alex@/tmp/sort$ ./select
-19, 48, 99, 71, 13, 52, 96, 73, 86, 7
-
-7, 48, 99, 71, 13, 52, 96, 73, 86, 19
-7, 13, 99, 71, 48, 52, 96, 73, 86, 19
-7, 13, 19, 71, 48, 52, 96, 73, 86, 99
-7, 13, 19, 48, 71, 52, 96, 73, 86, 99
-7, 13, 19, 48, 52, 71, 96, 73, 86, 99
-7, 13, 19, 48, 52, 71, 73, 96, 86, 99
-7, 13, 19, 48, 52, 71, 73, 86, 96, 99
-
-7, 13, 19, 48, 52, 71, 73, 86, 96, 99
-alex@/tmp/sort$
-```
-
-**Repo:**
-
--   GitHub repository: `sorting_algorithms'
--   File: `2-selection_sort.c, 2-O`
-
-### 3\. Quick sort
-
-mandatory
-
-Write a function that sorts an array of integers in ascending order using the [Quick sort](https://intranet.hbtn.io/rltoken/VoeZ2Hwp4Q0piTJ3OODY3w "Quick sort") algorithm
-
--	Prototype: `void quick_sort(int *array, size_t size);`
--	You must implement the `Lomuto` partition scheme.
--	The pivot should always be the last element of the partition being sorted.
--	You’re expected to print the `array` after each time you swap two elements (See example below)
-Write in the file `3-O`, the big O notations of the time complexity of the Quick sort algorithm, with 1 notation per line:
-
--	in the best case
--	in the average case
--	in the worst case
-
-```
-alex@/tmp/sort$ cat 3-main.c
-#include <stdio.h>
-#include <stdlib.h>
-#include "sort.h"
-
-/**
- * main - Entry point
- *
- * Return: Always 0
- */
-int main(void)
-{
-    int array[] = {19, 48, 99, 71, 13, 52, 96, 73, 86, 7};
-    size_t n = sizeof(array) / sizeof(array[0]);
-
-    print_array(array, n);
-    printf("\n");
-    quick_sort(array, n);
-    printf("\n");
-    print_array(array, n);
-    return (0);
-}
-alex@/tmp/sort$ gcc -Wall -Wextra -Werror -pedantic  -std=gnu89 3-main.c 3-quick_sort.c print_array.c -o quick
-alex@/tmp/sort$ ./quick
-19, 48, 99, 71, 13, 52, 96, 73, 86, 7
-
-7, 48, 99, 71, 13, 52, 96, 73, 86, 19
-7, 13, 99, 71, 48, 52, 96, 73, 86, 19
-7, 13, 19, 71, 48, 52, 96, 73, 86, 99
-7, 13, 19, 71, 48, 52, 73, 96, 86, 99
-7, 13, 19, 71, 48, 52, 73, 86, 96, 99
-7, 13, 19, 48, 71, 52, 73, 86, 96, 99
-7, 13, 19, 48, 52, 71, 73, 86, 96, 99
-
-7, 13, 19, 48, 52, 71, 73, 86, 96, 99
-alex@/tmp/sort$
-```
-
-**Repo:**
-
--	GitHub repository: `sorting_algorithms`
--	File: `3-quick_sort.c, 3-O`
+## 0 - Bubble sort
+
+Bubble sort repeatedly compares adjacent elements and swaps them if they are in the wrong order, moving the largest unsorted element to its correct position in each pass. Despite its simplicity, it is inefficient for large lists and is primarily used for educational purposes.
+###
+The provided C profram, [0-bubble\_sort.c](https://github.com/afiorg9000/sorting_algorithms/blob/main/0-bubble_sort.c), consists of two functions, designed to sort an array of integers using the Bubble Sort algorithm:
+###
+- swap function
+	- Purpose: Swaps two elements in an array.
+	- Parameters: Accepts three arguments: a pointer to an array of integers (array), and two indices (i and j) representing the positions of the elements to be swapped.
+	- Operation: Temporarily holds the value of the element at the first index, replaces it with the value at the second index, and then places the temporary value at the second index.
+- bubble\_sort function
+	- Purpose: Sorts an array using the Bubble Sort method.
+	- Parameters: Takes an array of integers and its size as arguments.
+	- Description: The function first checks if the array is null or has less than two elements, in which case it returns immediately. It iterates over the array, comparing adjacent elements and swapping them if they are out of order (i.e., the first is greater than the second). This process repeats until a full pass is made without any swaps, indicating the array is sorted.
+	- Efficiency Concerns: Bubble sort is known for its simplicity but is inefficient for large datasets with a time complexity of O(n2).
+###
+The bubble\_sort function also calls [print\_array](https://github.com/afiorg9000/sorting_algorithms/blob/main/print_array.c) to visually display the array after each swap, aiding in debugging or understanding the sorting process.
+
+## 1 - Insertion sort
+Insertion sort builds the final sorted array one element at a time by iteratively placing each element in its correct position among the already sorted elements. It has an average and worst-case time complexity of O(n^2)
+O(n^2), making it less efficient than more advanced algorithms like quicksort or merge sort for large datasets. However, it performs well for small datasets or nearly sorted arrays due to its simple implementation and low overhead.
+###
+The provided C program, [1-insertion\_sort\_list.c](https://github.com/afiorg9000/sorting_algorithms/blob/main/1-insertion_sort_list.c) defines a function that sorts a doubly linked list using the insertion sort algorithm. Here's a concise breakdown of its operation:
+- Function: insertion\_sort\_list
+	- Purpose: Sorts a doubly linked list in ascending order by adjusting the node positions to maintain the list's structure.
+	- Parameter: list, a double pointer to the head of the doubly linked list.
+- Key Details:
+	- Validation Checks: The function first checks if the list is null, if it's empty, or if it consists of a single node, in which case it returns immediately without doing anything.
+	- Sorting Mechanism: The sorting starts from the second node (designated as key). For each node, it compares the current key with its previous nodes.
+	- Node Swapping: If the key node is smaller than its previous node, they are swapped. This involves updating pointers of the key node, its previous node, and their respective adjacent nodes to ensure the list remains correctly linked.
+	- List Update: If during a swap the key node moves to the head of the list, the list's head pointer is updated.
+	- Visualization: After each swap, the function [print\_list](https://github.com/afiorg9000/sorting_algorithms/blob/main/print_list.c) is called to display the current state of the list, aiding in debugging or visual understanding of the sort process.
+###
+The function effectively rearranges the nodes within the list without modifying the actual data within each node, ensuring that the list is sorted in place while maintaining the integrity of the doubly linked structure.
+
+## 2 - Selection sort
+Selection sort is a simple sorting algorithm that segments the list into a sorted and an unsorted part. It repeatedly identifies the smallest (or largest) element in the unsorted section and swaps it to the end of the sorted section. This process is repeated until the entire list is sorted. Despite its straightforward nature, selection sort is inefficient for large lists with a time complexity of O(n2), making it less suitable compared to faster algorithms like quicksort or mergesort.
+###
+
+The provided C program,[2-selection\_sort.c](https://github.com/afiorg9000/sorting_algorithms/blob/main/2-selection_sort.c) implements the selection sort algorithm to sort an array of integers in ascending order. Here's a concise explanation of its functionality:
+- Function: selection\_sort
+	- Purpose: Sorts an array by repeatedly finding the minimum element from the unsorted part and swapping it with the first unsorted element.
+	- Parameters: Accepts an array of integers (array) and the number of elements in the array (size).
+- Key Details:
+	- Validation Check: Ensures that the array is not NULL before proceeding with the sorting process.
+	- Sorting Process: Iterates over the array, selecting the smallest element in the unsorted part and swapping it with the element at the current position.
+	- Swap Operation: Uses a temporary variable (swap) to swap elements in the array.
+	- Printing Array: After each swap, the function checks if any swaps were made in the inner loop (flag != 0) and prints the array to visualize the sorting process.
+###
+The selection sort algorithm divides the array into sorted and unsorted parts, repeatedly selecting the smallest element from the unsorted part and moving it to the sorted part. Although simple, selection sort has a time complexity of O(n2), making it inefficient for large datasets compared to more advanced algorithms.
+
+## 3 - Quick sort
+
+Quick sort is a fast sorting algorithm that divides an array into smaller subarrays, sorts them independently, and then combines them. Here's how it works:
+
+- Choose Pivot: Select a pivot element from the array.
+- Partitioning: Rearrange the array so that all elements less than the pivot are on the left, and all elements greater than the pivot are on the right.
+- Recursion: Recursively apply the above steps to the subarrays on the left and right of the pivot.
+- Base Case: The recursion stops when the subarray size is 1 or 0.
+###
+Quick sort has an average-case time complexity of O(nlogn) and is efficient in practice, making it a popular choice for sorting.
+###
+This C program, [3-quick\_sort.c](https://github.com/afiorg9000/sorting_algorithms/blob/main/3-quick_sort.c) implements the quicksort algorithm to sort an array of integers in ascending order. Here's a brief overview:
+- swap function: Swaps two elements in an array and prints the modified array. Used by the partition function.
+- partition function: Rearranges elements around a pivot element for quicksort. Elements less than the pivot are moved to the left, and greater elements to the right. Returns the new pivot index. Uses the swap function for rearrangement.
+- quick\_recursion function: Recursively sorts an array using quicksort. Partitions the array around a pivot and sorts the subarrays on either side of the pivot.
+- quick\_sort function: Initiates the quicksort algorithm by calling quick\_recursion with the initial left and right indices of the array.
+###
+The quicksort algorithm divides the array into two subarrays and recursively sorts them. It has an average time complexity of 
+O(nlogn), making it more efficient than other simple sorting algorithms like bubble sort and selection sort.
